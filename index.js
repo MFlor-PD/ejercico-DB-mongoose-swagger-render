@@ -15,6 +15,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api/tasks', routes);
 
+app.get('/', (req, res) => {
+  res.send('API de tareas en funcionamiento. Visita /api-docs para la documentación.');
+});
+
 dbConnection();
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
