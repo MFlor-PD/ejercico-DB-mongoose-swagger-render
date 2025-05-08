@@ -15,9 +15,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api/tasks', routes);
 
-app.get('/', (req, res) => {
-  res.send('API de tareas en funcionamiento. Visita /api-docs para la documentación.');
-});
+
 
 dbConnection();
 
