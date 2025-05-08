@@ -15,8 +15,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api/tasks', routes);
 
-
-
 dbConnection();
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
