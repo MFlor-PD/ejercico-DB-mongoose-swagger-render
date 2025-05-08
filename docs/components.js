@@ -1,4 +1,4 @@
-const components = {
+module.exports = {
     components: {
       schemas: {
         Task: {
@@ -22,4 +22,4 @@ const components = {
     },
   };
   
-  module.exports = components;
+  

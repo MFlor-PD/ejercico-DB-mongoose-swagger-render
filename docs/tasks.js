@@ -1,4 +1,4 @@
-const tasksdocs = {
+module.exports = {
     paths: {
       "/api/tasks/create": {
         post: {
@@ -175,4 +175,4 @@ const tasksdocs = {
     },
   };
   
-  module.exports = tasksdocs;
+   

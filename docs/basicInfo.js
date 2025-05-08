@@ -1,4 +1,4 @@
-const basicInfo = {
+module.exports = {
     openapi: "3.0.0",
     info: {
       title: "Tasks API",
@@ -7,4 +7,3 @@ const basicInfo = {
     },
   };
   
-  module.exports = basicInfo;

@@ -3,7 +3,7 @@ const components = require('./components');
 const tasks = require('./tasks');
 
 module.exports = {
-  basicInfo,
-  components,
-  tasks,
+  ...basicInfo,            
+  ...components,           
+  ...tasks,                
 };
