@@ -5,21 +5,35 @@ const { dbConnection } = require('./config/config');
 const routes = require('./routes');
 const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocs = require('./docs')
+const swaggerDocs = require('./docs');
 
 
 dotenv.config();
 app.use(express.json());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup({
-  openapi: swaggerDocs.basicInfo.openapi,
-  info: swaggerDocs.basicInfo.info,
-  components: swaggerDocs.components,
-  paths: swaggerDocs.tasks.paths,
-}));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api/tasks', routes);
 
 dbConnection();
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
