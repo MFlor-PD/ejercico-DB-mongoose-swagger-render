@@ -3,7 +3,7 @@ const router = express.Router();
 const Task = require("../models/Task.js");
 
 //CREATE TASK
-router.post("/create", async(req, res) => {
+router.post("/", async(req, res) => {
     try {
         const task = await Task.create({...req.body, completed: false });
         res.status(201).send({ message: "Task successfully created", task });
@@ -28,7 +28,7 @@ router.get("/", async(req, res) => {
 
 //GET TASK BY ID
 
-router.get("/id/:_id", async(req, res) => {
+router.get("/:_id", async(req, res) => {
     try {
         const task = await Task.findById(req.params._id);
         res.send(task);
@@ -39,41 +39,38 @@ router.get("/id/:_id", async(req, res) => {
                 req.params._id,
         });
     }
-}, )
+})
 
-//MARK TASK AS COMPLETED (en este endpoint no le permitimos que edite el titulo)
 
-router.put("/markAsCompleted/:_id", async(req, res) => {
+
+//UPDATE TASK title only
+
+router.put("/:_id", async(req, res) => {
         try {
-            const task = await Task.findByIdAndUpdate(
-                req.params._id, {
-                    completed: true,
-                }, { new: true }
-            );
-            res.send({ message: "Task successfully updated", task });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({
-                message: "There was a problem trying to update the task with _id: " +
-                    req.params._id,
-            });
-        }
-    }),
+            const { title, completed } = req.body; // agregue el complete para que al intentar cambiarlo tire el mensaje de error
+            if (!title) {
+                return res.status(400).send({ message: "Title is required" });
+            }
+            if (completed !== undefined) {
+                return res.status(400).send({ message: "You cannot change the 'completed' field from this endpoint" }); // aca esta
+              }
 
-    //UPDATE TASK
+            const task = await Task.findByIdAndUpdate(req.params._id,
+                {title}, 
+                { new: true });
 
-    router.put("/id/:_id", async(req, res) => {
-        try {
-            const task = await Task.findByIdAndUpdate(req.params._id, req.body, { new: true })
+                if (!task) return res.status(404).send({ message: "Task not found" });
+
             res.send({ message: "task successfully updated", task });
         } catch (error) {
             console.error(error);
+            res.status(500).send({ message: "There was a problem updating the task" });
         }
     }),
 
     //DELETE TASK
 
-    router.delete("/id/:_id", async(req, res) => {
+    router.delete("/:_id", async(req, res) => {
         try {
             const task = await Task.findByIdAndDelete(req.params._id);
             res.send({ message: "task deleted", task });
